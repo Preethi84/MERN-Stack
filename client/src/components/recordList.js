@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
+
 import { Link } from "react-router-dom";
 const Record = (props) => (
  <tr>
@@ -21,26 +23,29 @@ export default function RecordList() {
  const [records, setRecords] = useState([]);
   // This method fetches the records from the database.
  useEffect(() => {
-   async function getRecords() {
-     const response = await fetch(`http://localhost:5000/record/`);
-      if (!response.ok) {
-       const message = `An error occurred: ${response.statusText}`;
-       window.alert(message);
-       return;
-     }
-      const records = await response.json();
-     setRecords(records);
-   }
-    getRecords();
-    return;
- }, [records.length]);
+      axios.get('http://localhost:5050/record').then(response => {
+        console.log(response)
+      setRecords(response.data.records);
+     }).catch(error => {
+      console.error(error);
+     });
+ }, []);
   // This method will delete a record
  async function deleteRecord(id) {
-   await fetch(`http://localhost:5000/${id}`, {
+  console.log(id)
+   await fetch(`http://localhost:5050/${id}`, {
      method: "DELETE"
-   });
-    const newRecords = records.filter((el) => el._id !== id);
-   setRecords(newRecords);
+   }).then(response => {
+    console.log(response);
+    console.log(records)
+    if(response.status == 200){
+      const newRecords = records.filter((el) => el._id !== response.id);
+      setRecords(newRecords);
+    }
+   }).catch(error => {
+      window.alert(error)
+   })
+
  }
   // This method will map out the records on the table
  function recordList() {

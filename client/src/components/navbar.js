@@ -12,7 +12,7 @@ export default function Navbar(){
                 </NavLink>
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
+                aria-controls=" navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
